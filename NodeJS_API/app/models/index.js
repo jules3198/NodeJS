@@ -21,9 +21,10 @@ db.sequelize = sequelize;
 
 
 
-db.piece = require("./piece.model.js")(sequelize, Sequelize);
+
 db.equipement_localisation=require("./equipement_localisation.model.js")(sequelize, Sequelize);
-//db.equipement=require("./equipement.model.js")(sequelize, Sequelize);
 db.document=require("./document.model.js")(sequelize, Sequelize);
+db.files = require('./file.model')(sequelize, Sequelize);
 
 module.exports = db;
+

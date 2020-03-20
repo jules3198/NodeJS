@@ -17,18 +17,19 @@ exports.create = (req, res) => {
     // Create a document
     const document = {
         date: req.body.date,
-        titre: req.body. titre,
+        titre: req.body.titre,
         w1g_file_path_ftp: req.body.w1g_file_path_ftp
     };
-
+ 
 
     console.log("objet créer :",document);
   
     // Save Document in the database
     Document.create(document)
       .then(data => {
+        console.log("création document")
         res.send(data);
-        console.log("document créer")
+        console.log("document créer",data)
       })
       .catch(err => {
         res.status(500).send({
@@ -65,7 +66,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     const id = req.params.id;
   
-    Piece.findByPk(id)
+    Document.findByPk(id)
       .then(data => {
         res.send(data);
       })

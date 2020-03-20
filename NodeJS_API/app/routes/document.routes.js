@@ -4,21 +4,21 @@ module.exports = app => {
     var router = require("express").Router();
   
     // Create a new Documents
-    router.post("/", documents.create);
+    router.post("/documents", documents.create);
   
     // Retrieve all Documents
-    router.get("/", documents.findAll);
+    router.get("/documents", documents.findAll);
   
     // Retrieve all published Document
    // router.get("/published", tutorials.findAllPublished);
   
     // Retrieve a single Document with id
-    router.get("/:id", documents.findOne);
+    router.get("/documents/:id", documents.findOne);
   
     // Update a Document with id
-    router.put("/:id", documents.update);
+    router.put("/documents/:id", documents.update);
   
    
   
-    app.use('/api/documents', router);
+    app.use('/api', router);
   };

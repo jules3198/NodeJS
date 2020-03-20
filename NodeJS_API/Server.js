@@ -11,6 +11,8 @@ var corsOptions = {
 
 app.use(cors());
 
+global.__basedir = __dirname;
+
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
 
@@ -20,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //call of synchronisation method
 
 const db = require("./app/models");
-db.sequelize.sync();
+//db.sequelize.sync(); pour arreter de drop les tables à chaque lancement du tableau
 
 
 // In development, you may need to drop existing tables and re-sync database. Just use force: true
@@ -34,6 +36,9 @@ db.sequelize.sync({ force: true }).then(() => {
 
 
 require("./app/routes/document.routes")(app);
+require("./app/routes/file.routes")(app);
+require("./app/routes/equipement_localisation.routes")(app);
+
 
 
 
