@@ -3,10 +3,10 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const app = express();
-/*
+
 var corsOptions = {
-  origin: "http://localhost:8081"    
-};*/
+  origin: "http://localhost:8000"    
+};
 
 
 app.use(cors());
@@ -26,9 +26,9 @@ const db = require("./app/models");
 
 
 // In development, you may need to drop existing tables and re-sync database. Just use force: true
-db.sequelize.sync({ force: true }).then(() => {
-  console.log("Drop and re-sync db.");
-});
+//db.sequelize.sync({ force: true }).then(() => {
+ // console.log("Drop and re-sync db.");
+//});
 
 
 

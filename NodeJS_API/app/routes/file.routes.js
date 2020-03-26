@@ -9,7 +9,7 @@ module.exports = app => {
 
     
     // insert a new image
-router.post('/file/upload', upload.single("file"), fileWorker.uploadFile);
+router.post('/file/upload', upload.single("image"), fileWorker.uploadFile);
  
     // Retrieve all images
 router.get('/file/listImage', fileWorker.listAllFiles);

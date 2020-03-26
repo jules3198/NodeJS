@@ -26,7 +26,9 @@ exports.listAllFiles = (req, res) => {
 }
  
 exports.downloadFile = (req, res) => {
-  File.findById(req.params.id).then(file => {
+  
+  const id = req.params.id;
+    File.findByPk(id).then(file => {
     var fileContents = Buffer.from(file.data, "base64");
     var readStream = new stream.PassThrough();
     readStream.end(fileContents);
