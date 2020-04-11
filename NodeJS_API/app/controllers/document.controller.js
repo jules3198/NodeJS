@@ -1,24 +1,20 @@
 const db = require("../models");
 const Document = db.document;
 const Op = db.Sequelize.Op;
+var stream = require('stream');
 
 
 
 exports.create = (req, res) => {
-    // Validate request
-   /* if (!req.body.title) {
-      res.status(400).send({
-        message: "Content can not be empty!"
-      });
-      return;
-    }*/
+   
   
     console.log("creation objet");
     // Create a document
     const document = {
         date: req.body.date,
         titre: req.body.titre,
-        w1g_file_path_ftp: req.body.w1g_file_path_ftp
+        w1g_file_path_ftp: req.body.w1g_file_path_ftp,
+        valid: req.body.valid
     };
  
 
@@ -39,6 +35,9 @@ exports.create = (req, res) => {
         });
       });
   };
+
+
+
 
 
 
@@ -79,11 +78,13 @@ exports.findOne = (req, res) => {
 
 
 
-  // Find a single Document with titre
+  // Find a all valid true Documents
 
-  exports.findAllBytitre = (req, res) => {
-    const titre = req.query.titre;
-    var condition = titre ? { titre: { [Op.iLike]: `%${titre}%` } } : null;
+  exports.findAllByValidTrue = (req, res) => {
+    
+    const valid=true;
+
+    var condition = valid ? { valid:true } : null;
   
     Document.findAll({ where: condition })
       .then(data => {
@@ -96,6 +97,29 @@ exports.findOne = (req, res) => {
         });
       });
   };
+
+
+ // Find a all valid false Documents
+
+ exports.findAllByValidFalse = (req, res) => {
+    
+  
+  var condition =  { valid:false } ;
+
+  Document.findAll({ where: condition })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving tutorials."
+      });
+    });
+};
+
+
+
 
 
 //Update a Document identified by the id in the request:

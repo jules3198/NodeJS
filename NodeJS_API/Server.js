@@ -22,12 +22,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //call of synchronisation method
 
 const db = require("./app/models");
-//db.sequelize.sync(); pour arreter de drop les tables à chaque lancement du tableau
+//db.sequelize.sync(); //pour arreter de drop les tables à chaque lancement du tableau
 
 
 // In development, you may need to drop existing tables and re-sync database. Just use force: true
 //db.sequelize.sync({ force: true }).then(() => {
- // console.log("Drop and re-sync db.");
+//console.log("Drop and re-sync db.");
 //});
 
 
@@ -36,7 +36,7 @@ const db = require("./app/models");
 
 
 require("./app/routes/document.routes")(app);
-require("./app/routes/file.routes")(app);
+
 require("./app/routes/equipement_localisation.routes")(app);
 
 
