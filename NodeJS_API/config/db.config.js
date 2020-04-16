@@ -3,7 +3,7 @@ module.exports = {
     HOST: "localhost",
     USER: "postgres",
     PASSWORD: "jules",
-    DB: "NodeJS",
+    DB: "Camera360",
     dialect: "postgres",
     pool: {
       max: 5,

@@ -1,20 +1,25 @@
 const db = require("../models");
 const Document = db.document;
 const Op = db.Sequelize.Op;
-var stream = require('stream');
+
+
 
 
 
 exports.create = (req, res) => {
-   
+  
+  date=new Date();
+  title=req.file.originalname;
+  path="/uploads/"+title;
+  valid=false;
   
     console.log("creation objet");
     // Create a document
     const document = {
-        date: req.body.date,
-        titre: req.body.titre,
-        w1g_file_path_ftp: req.body.w1g_file_path_ftp,
-        valid: req.body.valid
+        date: date,
+        titre: title,
+        w1g_file_path_ftp: path,
+        valid: valid
     };
  
 
@@ -172,6 +177,16 @@ exports.delete = (req, res) => {
         });
       });
   };
+
+
+  exports.insertimage=(req,res)=>{
+
+    console.log("fonction lancée");
+    console.log("type:"+req.file.mimetype)
+    console.log("name",req.file.originalname);
+    
+    console.log(req.file)
+  }
 
 
 

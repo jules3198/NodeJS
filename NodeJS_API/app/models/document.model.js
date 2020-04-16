@@ -11,8 +11,10 @@ These columns will be generated automatically: id, id_immeuble, titre, batiment.
 
 module.exports = (sequelize, Sequelize) => {
     const Document = sequelize.define("document", {
+    
       date: {
         type: Sequelize.DATEONLY
+        
       },
       titre: {
         type: Sequelize.STRING
@@ -23,7 +25,12 @@ module.exports = (sequelize, Sequelize) => {
       valid:{
         type:Sequelize.BOOLEAN
       }
-    });
+      
+    },
+    {
+      timestamps: false
+    }
+    );
   
     return Document;
   };
