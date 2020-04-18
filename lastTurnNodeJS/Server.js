@@ -1,5 +1,5 @@
 const express = require("express");
-
+const fs = require('fs');
 const app = express();
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
@@ -146,3 +146,27 @@ app.get("/oneDocument/:id", (req, res) => {
       res.render("delete", { model: result.rows[0] });
     });
   });
+
+
+
+
+  app.get("/getImage/:chemin",(req,res)=>{
+
+
+    const filePath="/"+req.params.chemin;
+    fs.exists(filePath, function(exists){
+      if (exists) {     
+        // Content-type is very interesting part that guarantee that
+        // Web browser will handle response in an appropriate manner.
+        response.writeHead(200, {
+          "Content-Type": "application/octet-stream",
+          "Content-Disposition": "attachment; filename=" + fileName
+        });
+        fs.createReadStream(filePath).pipe(response);
+      } else {
+        response.writeHead(400, {"Content-Type": "text/plain"});
+        response.end("ERROR File does not exist");
+      }
+    });
+  
+  })
