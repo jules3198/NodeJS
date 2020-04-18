@@ -51,7 +51,7 @@ try {
         return console.error(err.message);
       }
 
-      res.send("files: "+req.file+"\n"+"enregistrement reussie");
+      res.send("files: "+req.file);
 
     })
 } catch (error) {

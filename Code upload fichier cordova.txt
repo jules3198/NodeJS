@@ -1,0 +1,80 @@
+
+-------------  plugin à ajouter dans le projet   -------------------
+
+cordova plugin add cordova-plugin-filepath
+
+cordova plugin add cordova-plugin-camera
+
+
+
+
+---------------- partie html------------------
+
+<button onclick="getImage()">Upload a Photo</button>
+
+
+
+
+--------------- partie javascript-------------------
+
+
+
+
+var camearaOptions = {
+    quality: 100,
+    sourceType: Camera.PictureSourceType.PHOTOLIBRARY, 
+      destinationType: Camera.DestinationType.FILE_URI
+}
+
+function getImage() {
+
+    navigator.camera.getPicture(successCameraCallback, onErrorCamera, camearaOptions);
+}
+
+function onErrorCamera(err) {
+    alert(err);
+}
+
+
+function successCameraCallback(imageURI) {
+   
+    window.FilePath.resolveNativePath(imageURI, successCallbackfilepath, errorCallbackfilepath);       
+}
+
+
+
+function successCallbackfilepath(filepath){
+
+    alert("resolvenative lance");
+    alert("file path"+filepath);
+    uploadphoto(filepath);
+}
+
+
+function errorCallbackfilepath(error){
+
+    alert("resolvenative lance");
+    
+}
+
+
+function uploadphoto(filepath){
+
+    alert("upload lance");
+    var options = new FileUploadOptions();
+    options.fileKey = "image";
+    options.fileName = filepath.substr(filepath.lastIndexOf('/') + 1);
+    options.mimeType = "image/*";
+    alert("option : " +options.fileName);
+
+    var ft = new FileTransfer();
+    ft.upload(filepath, "http://10.0.2.2:3000/addDocument",
+        function(result) {
+            alert(JSON.stringify(result));
+        },
+        function(error) {
+            alert(JSON.stringify(error));
+        }, options);
+
+}
+
