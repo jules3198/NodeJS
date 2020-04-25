@@ -1,7 +1,8 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-const cors = require('cors')
+const cors = require('cors');
+const fs = require('fs');
 
 
 
@@ -24,6 +25,7 @@ const pool = new Pool({
 
 
 var storage = multer.diskStorage({
+
     destination: function(req, file, cb) {
         cb(null, './images');
      },
@@ -33,28 +35,27 @@ var storage = multer.diskStorage({
 });
 var upload = multer({ storage: storage })
 
-
 app.post("/addDocument/:idpiece",upload.single('image'),(req,res)=>{
+  date = new Date();
 try {
-    
-    let idpiece = req.params.idpiece;
-    let date=new Date();
-    let titre=req.file.originalname;
-    let w1g_file_path_ftp="/images/"+titre;
-    const sql = "INSERT INTO documents (date, titre,w1g_file_path_ftp, valid, id_piece) VALUES ($1, $2, $3, $4, $5)";
-  const document = [date, titre, w1g_file_path_ftp,false,idpiece];
+  const sql = "INSERT INTO documents (date, titre,w1g_file_path_ftp, valid, id_piece) VALUES ($1, $2, $3, $4, $5)";
+  const document = [date,date.getTime(),"/images/"+date.getTime(),false,req.params.idpiece];
   pool.query(sql, document, (err, result) => {
     if (err) {
         return console.error(err.message);
       }
       res.send("files: "+req.file+"\n"+"enregistrement reussie");
-    })
+      
+      fs.rename('./images/'+req.file.originalname, './images/'+date.getTime()+".jpg", () => { 
+        console.log("file rename")
+      });
+   })
 } catch (error) {
     
     console.log(error);
     res.send(400);
+    
 }
-
 });
 
 app.use(express.static('public'));
